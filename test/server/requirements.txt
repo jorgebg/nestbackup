@@ -1,0 +1,6 @@
+boto3==1.17.91
+psycopg2-binary==2.8.6
+mysql-connector-python==8.0.25
+peewee==3.14.4
+awscli==1.19.91
+requests==2.25.1
