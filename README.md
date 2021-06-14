@@ -72,14 +72,18 @@ nestbackup restore
 
 ## Installation
 
-It is not published in PyPI yet. In the meantime, you can checkout the repository and install it using `setup.py`:
+
+```
+pip3 install nestbackup
+```
+
+Or you can checkout the repository and install it using `setup.py`:
 
 ```
 git checkout git@github.com:jorgebg/nestbackup.git
 cd nestbackup
 python3 ./setup.py install
 ```
-
 Or download it right to your `/usr/bin/` folder:
 
 ```
