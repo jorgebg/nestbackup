@@ -451,7 +451,7 @@ class NestBackupCommand:
 
 def main():
     parser = argparse.ArgumentParser(
-        description="Backup a server to S3 using on a short and simple config file. If NESTBACKUP_CONFIG environment variable is not set, it takes ~/backup.ini by default."
+        description="Backup a server to S3 using a short and simple config file. If NESTBACKUP_CONFIG environment variable is not set, it takes ~/backup.ini by default."
     )
     parser.add_argument(
         "action", choices=ACTION_CHOICES, help="Backup, restore, or validate the config"

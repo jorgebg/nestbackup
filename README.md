@@ -1,6 +1,6 @@
 # NestBackup
 
-Backup a server to S3 using on a short and simple config file.
+Backup a server to S3 using a short and simple config file.
 
 # Configuration
 

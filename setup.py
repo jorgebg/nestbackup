@@ -13,7 +13,7 @@ from setuptools import find_packages, setup, Command
 
 # Package meta-data.
 NAME = 'nestbackup'
-DESCRIPTION = 'Backup a server to S3 using on a short and simple config file.'
+DESCRIPTION = 'Backup a server to S3 using a short and simple config file.'
 URL = 'https://github.com/jorgebg/nestbackup'
 EMAIL = 'jorge.barata.gonzalez@gmail.com'
 AUTHOR = 'Jorge Barata'
