@@ -198,12 +198,18 @@ class BaseJob:
 
 @JobManager.register("sync")
 class SyncJob(BaseJob):
-    fields = ("local_path",)
+    fields = ("local_path", "aws_extra_args")
+
+    def __init__(self, section):
+        super().__init__(section)
+        ctx = self.context
+        if ctx.aws_extra_args is None:
+            ctx.aws_extra_args = ''
 
     def backup(self, report):
         ctx = self.context
         agg_operations = defaultdict(int)
-        for line in self.run_stream("{aws_cli} s3 sync {local_path} {s3_bucket_url}"):
+        for line in self.run_stream("{aws_cli} s3 sync {aws_extra_args} {local_path} {s3_bucket_url}"):
             if re.match(r"\w+:.*", line):
                 op = line.split(":")[0]
                 agg_operations[op] += 1
