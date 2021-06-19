@@ -2,18 +2,27 @@
 
 Backup a server to S3 using a short and simple config file.
 
+The config file describes a list of steps to be ran. It can backup databases (PostgreSQL and MySQL), folders (e.g. application media), and send an email with the result of the backup.
+
+All the backup commands are ran as shell calls (e.g. `aws s3 ...`, `pg_dump ...`), and each of these calls are logged, so what NestBackup does under the hood is transparent and the steps can be easily reproduced in a shell.
+
 # Configuration
 
 NestBackup expects the config file to be in `~/backup.ini`. It can be overriden using the `NESTBACKUP_CONFIG` environment variable.
 
-Each section describes a job to be ran, and it is uploaded to `hostname/section_name/[remote_path]`.
+## Sections
+
+Each section describes a job to be ran, and the backup is uploaded to `hostname/section_name/[remote_path]`.
 
 Available jobs:
-- sync: Sinchronizes a path with the remote one. Uses `s3 sync`.
-- database: Dumps the data of given database, compresses it and uploads it to the bucket. It supports mysql and postgresql.
-- smtp: Sends an email with a report of the jobs that were ran.
+- `sync`: Sinchronizes a path with the remote one. Uses `s3 sync`.
+- `database`: Dumps the data of given database, compresses it and uploads it to the bucket. It supports mysql and postgresql.
+- `smtp`: Sends an email with a report of the jobs that were ran.
 
-### Example config file
+The `job` field is a mandatory attribute for all the section, as is the one that determines which job will be run.
+
+
+## Example config file
 
 ```
 [DEFAULT]
@@ -45,7 +54,7 @@ recipients=admin@example.com
 ```
 
 
-## Usage
+# Usage
 
 Initialize a base config file in `~/backup.ini` (overridable by `NESTBACKUP_CONFIG` environment variable):
 ```
@@ -63,14 +72,14 @@ nestbackup restore
 ```
 
 
-### Cron example
+# Cron example
 
 ```
   0 1     *  *  * bash -lc "nestbackup backup"
 ```
 
 
-## Installation
+# Installation
 
 
 ```
@@ -91,8 +100,9 @@ wget https://raw.githubusercontent.com/jorgebg/nestbackup/main/nestbackup.py -o 
 chmod +x /usr/bin/nestbackup
 ```
 
-### Requirements
+## Requirements
 
 - **Python 3.6+**, but I'm successfully using it on machines with Python 3.4
 - **AWS CLI**
   - `pip install awscli`
+
