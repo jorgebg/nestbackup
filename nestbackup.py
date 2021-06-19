@@ -224,7 +224,7 @@ class SyncJob(BaseJob):
         )
 
     def restore(self):
-        self.run("{aws_cli} s3 sync {s3_bucket_url} {local_path}")
+        self.run("{aws_cli} s3 sync {aws_extra_args} {s3_bucket_url} {local_path}")
 
 
 @JobManager.register("database")
