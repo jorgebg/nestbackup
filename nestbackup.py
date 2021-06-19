@@ -117,6 +117,7 @@ class JobManager:
     def register(cls, job_id):
         def registerer(job_cls):
             cls.JOB_CLASS_MAP[job_id] = job_cls
+            return job_cls
 
         return registerer
 
