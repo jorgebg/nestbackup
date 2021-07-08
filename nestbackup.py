@@ -294,14 +294,15 @@ class DatabaseJob(BaseJob):
         ctx = self.context
         ctx.current_date = datetime.now().isoformat()
         ctx.dump_basename = "{scheme}_{current_date}.sql".format(**ctx)
+        ctx.dump_basename_zip = ctx.dump_basename + ".tar.gz"
         ctx.dump_filename = "/tmp/{dump_basename}".format(**ctx)
         ctx.dump_filename_zip = ctx.dump_filename + ".tar.gz"
         ctx.dump_dirname = os.path.dirname(ctx.dump_filename)
 
         self.run(self._get_command(ACTION_BACKUP) + " > {dump_filename}")
         self.run("tar -C {dump_dirname} -zcvf {dump_filename_zip} {dump_basename}")
-        self.run("{aws_cli} s3 cp {dump_filename_zip} {s3_bucket_url}/{dump_basename}")
-        report.add(ctx.name, ["upload: {s3_bucket_url}/{dump_basename}".format(**ctx)])
+        self.run("{aws_cli} s3 cp {dump_filename_zip} {s3_bucket_url}/{dump_basename_zip}")
+        report.add(ctx.name, ["upload: {s3_bucket_url}/{dump_basename_zip}".format(**ctx)])
         self.run("rm {dump_filename} {dump_filename_zip}")
         if ctx.retention:
             result = self.run(
